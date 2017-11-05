@@ -1,0 +1,85 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1659971720828554}
+  m_IsPrefabParent: 1
+--- !u!1 &1659971720828554
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4185479965417810}
+  - component: {fileID: 114969299474984764}
+  - component: {fileID: 114088439318242588}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4185479965417810
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1659971720828554}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114088439318242588
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1659971720828554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d363e922d834afe4dbdf0a268c0f5258, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boardScript: {fileID: 0}
+  fTaulell: {fileID: 4900000, guid: 0dcecda73bda7fd46aacffefff136758, type: 3}
+--- !u!114 &114969299474984764
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1659971720828554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c662e43bba2c3664e80a3f6d641c3bcd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  goSortides:
+  - {fileID: 1091904922397596, guid: e1c686e6605a97243b84c7aceab7e4ce, type: 2}
+  - {fileID: 1330287351615592, guid: bfebf59b0d5b2cc49896bf1df4b6f63f, type: 2}
+  - {fileID: 1176445057355676, guid: 4dd49a7c21786b140b4fec4dc88ec05d, type: 2}
+  - {fileID: 1677568489019762, guid: b36882a1a1a538b4a8f65b83696315c2, type: 2}
+  goTerres:
+  - {fileID: 1503011435635136, guid: 5c2146497da09f549bb8b7666fd1c6da, type: 2}
+  - {fileID: 1257284169534042, guid: 7e624e8af7cfbb9438a8a3e5cea85130, type: 2}
+  - {fileID: 1525512066095362, guid: 5343ca70fb824374db435ac36a3a4dc5, type: 2}
+  - {fileID: 1355920015995548, guid: 0b09909848959404094bcb28ed500447, type: 2}
+  goTerra: {fileID: 1066300679764522, guid: 6e6a43fcb26dddf4c95d845b286974ef, type: 2}
+  goParetOutH: {fileID: 1443376066584916, guid: 2a913ceca2991e44d9ad5412438a3690,
+    type: 2}
+  goParetOutV: {fileID: 1828130801188652, guid: f05de3885f79f084aaaf7e1589dc695d,
+    type: 2}
+  goParetInH: {fileID: 1454123220864618, guid: 63fd6095db62a6543884c7656a9879f9, type: 2}
+  goParetInV: {fileID: 1896144373125308, guid: eff8a6f21166daa419e6b0b6f83e92c0, type: 2}
+  goMoneda: {fileID: 1553172567238176, guid: bbd44d096113e5f4aa2c235d439b2330, type: 2}

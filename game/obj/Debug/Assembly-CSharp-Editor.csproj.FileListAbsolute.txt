@@ -1,7 +1,6 @@
 C:\Users\oscar\Desktop\udg\master\1er\1er\jocs\joc\game\Temp\bin\Debug\Assembly-CSharp-Editor.dll
 C:\Users\oscar\Desktop\udg\master\1er\1er\jocs\joc\game\Temp\bin\Debug\Assembly-CSharp-Editor.pdb
 C:\Users\oscar\Desktop\udg\master\1er\1er\jocs\joc\game\Temp\bin\Debug\nunit.framework.dll
-C:\Users\oscar\Desktop\udg\master\1er\1er\jocs\joc\game\Temp\bin\Debug\SyntaxTree.VisualStudio.Unity.Bridge.dll
 C:\Users\oscar\Desktop\udg\master\1er\1er\jocs\joc\game\Temp\bin\Debug\UnityEditor.Advertisements.dll
 C:\Users\oscar\Desktop\udg\master\1er\1er\jocs\joc\game\Temp\bin\Debug\UnityEditor.Analytics.dll
 C:\Users\oscar\Desktop\udg\master\1er\1er\jocs\joc\game\Temp\bin\Debug\UnityEditor.Android.Extensions.dll
@@ -31,7 +30,6 @@ C:\Users\oscar\Desktop\udg\master\1er\1er\jocs\joc\game\Temp\bin\Debug\Unity.Leg
 C:\Users\oscar\Desktop\udg\master\1er\1er\jocs\joc\game\Temp\bin\Debug\Unity.UNetWeaver.dll
 C:\Users\oscar\Desktop\udg\master\1er\1er\jocs\joc\game\Temp\bin\Debug\UnityEditor.iOS.Extensions.Xcode.dll
 C:\Users\oscar\Desktop\udg\master\1er\1er\jocs\joc\game\Temp\bin\Debug\Mono.Cecil.Mdb.dll
-C:\Users\oscar\Desktop\udg\master\1er\1er\jocs\joc\game\Temp\bin\Debug\SyntaxTree.VisualStudio.Unity.Messaging.dll
 C:\Users\oscar\Desktop\udg\master\1er\1er\jocs\joc\game\Temp\bin\Debug\Unity.CecilTools.dll
 C:\Users\oscar\Desktop\udg\master\1er\1er\jocs\joc\game\Temp\bin\Debug\Mono.Cecil.Pdb.dll
 C:\Users\oscar\Desktop\udg\master\1er\1er\jocs\joc\game\Temp\bin\Debug\Assembly-CSharp.pdb

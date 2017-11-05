@@ -53,6 +53,9 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\BoardManager.cs" />
      <Compile Include="Assets\Scripts\GameManager.cs" />
+     <Compile Include="Assets\Scripts\Loader.cs" />
+     <Compile Include="Assets\Scripts\MovingObject.cs" />
+     <None Include="Assets\Taulells\L1.txt" />
      <None Include="Assets\Sprites\sokoban_spritesheet@2.xml" />
      <None Include="Assets\Sprites\sokoban_spritesheet.xml" />
  <Reference Include="UnityEngine.UI">

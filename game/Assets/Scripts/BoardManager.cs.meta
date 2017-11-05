@@ -1,15 +1,17 @@
 fileFormatVersion: 2
 guid: c662e43bba2c3664e80a3f6d641c3bcd
-timeCreated: 1509569955
+timeCreated: 1509895380
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
   defaultReferences:
-  - sortides: {fileID: 1091904922397596, guid: e1c686e6605a97243b84c7aceab7e4ce, type: 2}
-  - jugador: {instanceID: 0}
-  - paretOutH: {instanceID: 0}
-  - paretOutV: {instanceID: 0}
-  - paretIn: {instanceID: 0}
+  - goSortida: {instanceID: 0}
+  - goJugador: {instanceID: 0}
+  - goParetOutH: {instanceID: 0}
+  - goParetOutV: {instanceID: 0}
+  - goParetIn: {instanceID: 0}
+  - goMoneda: {instanceID: 0}
+  - fTaulell: {fileID: 4900000, guid: 0dcecda73bda7fd46aacffefff136758, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

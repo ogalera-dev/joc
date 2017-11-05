@@ -1,13 +1,29 @@
-﻿<Properties StartupConfiguration="{1AF7E356-2D58-7119-FE6C-C1ED31A62E64}|Pruebas unitarias">
+﻿<Properties StartupConfiguration="{04566140-20BA-321C-B1D3-A17B3E091F1C}|Pruebas unitarias">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\BoardManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\MovingObject.cs">
     <Files>
-      <File FileName="Assets\Scripts\BoardManager.cs" Line="8" Column="19" />
+      <File FileName="Assets\Scripts\BoardManager.cs" Line="184" Column="78" />
+      <File FileName="Assets\Scripts\GameManager.cs" Line="13" Column="25" />
+      <File FileName="Assets\Scripts\Loader.cs" Line="7" Column="2" />
+      <File FileName="Assets\Scripts\MovingObject.cs" Line="38" Column="32" />
     </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="game" expanded="True">
+            <Node name="Assembly-CSharp" expanded="True">
+              <Node name="Scripts" expanded="True">
+                <Node name="MovingObject.cs" selected="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp-Editor PreferredExecutionTarget="MonoDevelop.Default" />
 </Properties>
