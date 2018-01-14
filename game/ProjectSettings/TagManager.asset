@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Exit
   - Coin
+  - Number
   layers:
   - Default
   - TransparentFX

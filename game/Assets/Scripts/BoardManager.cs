@@ -7,15 +7,17 @@ using System.Text;
 using System.Text.RegularExpressions;
 using Random = UnityEngine.Random;
 
-public class BoardManager : MonoBehaviour {
+public class BoardManager : MonoBehaviour
+{
 	public GameObject[] goSortides;
 	public GameObject[] goTerres;
+	public GameObject goNumero;
 	public GameObject goTerra;
 	public GameObject goParetOutH;
 	public GameObject goParetOutV;
-	public GameObject goParetInH;
-	public GameObject goParetInV;
+	public GameObject goParetIn;
 	public GameObject goMoneda;
+	public GameObject goJugador;
 
 	private static readonly int PARED_IN_H = -2;
 	private static readonly int PARED_IN_V = -1;
@@ -25,17 +27,21 @@ public class BoardManager : MonoBehaviour {
 	private Taulell taulell;
 
 	#region Classes
-	public class BoardManagerException : Exception {		private String missatge;
+	public class BoardManagerException : Exception
+	{		private String missatge;
 
-		public BoardManagerException(String missatge) {			this.missatge = missatge;
+		public BoardManagerException(String missatge)
+		{			this.missatge = missatge;
 		}
 
-		public string getMissatge() {
+		public string getMissatge()
+		{
 			return missatge;
 		}
 	}
 
-	public class FitxerFormatException : Exception {
+	public class FitxerFormatException : Exception
+	{
 		private String missatge;
 
 		public FitxerFormatException(String missatge)
@@ -49,107 +55,151 @@ public class BoardManager : MonoBehaviour {
 		}
 	}
 
-	private class Taulell :IEnumerable<Casella>{
+	private class Taulell : IEnumerable<Casella>
+	{
 		public readonly int nivell;
 		public readonly List<List<Casella>> taulell = null;
 		public readonly int nFiles;
 		public readonly int nColumnes;
 		public readonly Jugador jugador;
+		public readonly Sortida sortida;
 
-		public Taulell(int nivell, int nFiles, int nColumnes, List<List<Casella>> taulell, Jugador jugador) {
+		public Taulell(int nivell, int nFiles, int nColumnes, List<List<Casella>> taulell, Jugador jugador, Sortida sortida)
+		{
 			this.nivell = nivell;
 			this.taulell = taulell;
 			this.nFiles = nFiles;
 			this.nColumnes = nColumnes;
 			this.jugador = jugador;
+			this.sortida = sortida;
 		}
 
-		public Taulell validar() {
-			int nSortides = 0;			foreach (Casella casella in this) {
-				if (!casella.getPosicio().valida(nFiles, nColumnes)) {
+		public Taulell validar()
+		{			foreach (Casella casella in this)
+			{
+				if (!casella.getPosicio().valida(nFiles, nColumnes))
+				{
 					Debug.Log("Casella " + casella.getPosicio() + ", no valida, limits " + nFiles + ", " + nColumnes);
 					throw new BoardManagerException("La posicio " + casella.getPosicio() + " no és valida dins d'un taulell de " + nFiles + " x " + nColumnes);
 				}
-				if (casella.getElement() == Element.SORTIDA) {
-					nSortides++;
-				}
 			}
 
-			if (nSortides != 1) {
-				Debug.Log("Nombre de sortides incorrecte, n'hi ha " + nSortides);
-				throw new BoardManagerException("Nombre de sortides incorrecte, n'hi ha " + nSortides);
+			if (!sortida.posicio.valida(nFiles, nColumnes))
+			{
+				Debug.Log("La posició del la sortida és incorrecte " + sortida.posicio + " en un taulell de " + nFiles + " x " + nColumnes);
+				throw new BoardManagerException("La posició de la sortida és incorrecte " + sortida.posicio+ " en un taulell de " + nFiles + " x " + nColumnes);
 			}
 
-			if (!jugador.posicio.valida(nFiles, nColumnes)) {
-				Debug.Log("La posicio del jugador és incorrecte " + jugador.posicio + " en un taulell de " + nFiles + " x " + nColumnes);
-				throw new BoardManagerException("La posicio del jugador és incorrecte " + jugador.posicio + " en un taulell de " + nFiles + " x " + nColumnes);
+			if (!jugador.posicio.valida(nFiles, nColumnes))
+			{
+				Debug.Log("La posició del jugador és incorrecte " + jugador.posicio + " en un taulell de " + nFiles + " x " + nColumnes);
+				throw new BoardManagerException("La posició del jugador és incorrecte " + jugador.posicio + " en un taulell de " + nFiles + " x " + nColumnes);
 			}
+
+
 			return this;
 		}
 
-		public IEnumerator<BoardManager.Casella> GetEnumerator() {
-			foreach(List<Casella> caselles in this.taulell) {
-				foreach(Casella casella in caselles) {
+		public IEnumerator<BoardManager.Casella> GetEnumerator()
+		{
+			foreach (List<Casella> caselles in this.taulell)
+			{
+				foreach (Casella casella in caselles)
+				{
 					yield return casella;
 				}
 			}
 		}
 
-		IEnumerator IEnumerable.GetEnumerator(){
+		IEnumerator IEnumerable.GetEnumerator()
+		{
 			return GetEnumerator();
 		}
 	}
 
-	private class Posicio {
+	private class Posicio
+	{
 		public int x;
 		public int y;
 
-		public Posicio(int y, int x) {
+		public Posicio(int y, int x)
+		{
 			this.y = y;
 			this.x = x;
 		}
 
-		public bool valida(int limitY, int limitX) {
+		public bool valida(int limitY, int limitX)
+		{
 			return x >= 0 && y >= 0 && x < limitX && y < limitY;
 		}
 
-		public override string ToString(){
-			return "["+y+", "+x+"]";
+		public override string ToString()
+		{
+			return "[" + y + ", " + x + "]";
 		}
 	}
 
-	private class Casella {
-		private Posicio posicio;
-		private Element element;
-		private Casella parella;
+	/**
+	 * @brief Cada una de les caselles del taulell.
+	 */
+	private class Casella
+	{
+		private Posicio posicio; //<Posició de la casella.
+		private Element element; //<Element que conté la casella.
+		private Casella parella; //<Destí del salt des de aquesta casella.
+		private int numero; //<Número de la casella.
 
-		public Casella(Posicio posicio, Element element, Casella parella) {
+		public Casella(Posicio posicio, Element element, Casella parella, int numero)
+		{
 			this.posicio = posicio;
 			this.element = element;
 			this.parella = parella;
+			this.numero = numero;
 		}
 
-		public void setElement(Element element) {
+		public void setElement(Element element)
+		{
 			this.element = element;
 		}
 
-		public Posicio getPosicio() {
-			return this.posicio;				
+		public Posicio getPosicio()
+		{
+			return this.posicio;
 		}
 
-		public Element getElement() {
-			return this.element;				
+		public Element getElement()
+		{
+			return this.element;
+		}
+
+		public int getNumero()
+		{
+			return this.numero;
 		}
 	}
 
-	private enum Element{
-		BUIT, PARED_IN_V, PARED_IN_H, PARED_OUT_V, PARED_OUT_H, MONEDA, SORTIDA
+
+	private enum Element
+	{
+		BUIT, PARED_IN_V, PARED_IN_H, PARED_OUT_V, PARED_OUT_H, MONEDA
 	}
 
-	private class Jugador {
-		public readonly Posicio posicio;
+	/**
+	 * @brief Representació del jugador (posicio).
+	 */
+	private class Jugador
+	{
+		public readonly Posicio posicio; //<Posició del jugador.
 
 		public Jugador(Posicio posicio) {
+			this.posicio = posicio;
+		}
+	}
+
+	private class Sortida {		
+		public readonly Posicio posicio; //<Posició de la sortida.
+
+		public Sortida(Posicio posicio){
 			this.posicio = posicio;
 		}
 	}
@@ -157,37 +207,80 @@ public class BoardManager : MonoBehaviour {
 
 	private void setup(Taulell taulell) {
 		int iRecurs = taulell.nivell % 4;
+		GameObject t = new GameObject("taulell");
+		t.transform.SetParent(boardHolder);
+		int nMonedes = 0;
 		foreach(Casella casella in taulell){
 			Posicio pos = casella.getPosicio();
-			GameObject objecte = null;
+			GameObject objecte = null; //<Objecte a instanciar: moneda, pared, sortida...
+			GameObject numero = null; //<Numero de la casella.
 			GameObject terra = Random.Range(0, 3) < 2 ? this.goTerra : this.goTerres[iRecurs];
-			GameObject inst = null;
+
 			switch (casella.getElement()){
 				case Element.MONEDA:
 					objecte = this.goMoneda;
+					numero = this.goNumero;
+					//objecte.transform.SetParent(monedes.transform);
+					nMonedes++;
 					break;
 				case Element.PARED_IN_V:
-					objecte = this.goParetInV;
-					//Per qualsevol tipus de pared, posem terra normal.
-					terra = this.goTerra;
-					break;
 				case Element.PARED_IN_H:
-					objecte = this.goParetInH;
+					objecte = this.goParetIn;
 					//Per qualsevol tipus de pared, posem terra normal.
 					terra = this.goTerra;
 					break;
-				case Element.SORTIDA:
-					//objecte = this.goSortides[iRecurs];
-					//La sortida no es pintarà fins que haguem obtinut els punts necessaris.
+				case Element.BUIT:
+					numero = this.goNumero;
 					break;
 			}
+			GameObject instanciaTerra = Instantiate(terra, new Vector3(pos.x * 1.28f, pos.y * 1.28f, 0F), Quaternion.identity) as GameObject;
+			instanciaTerra.transform.SetParent(t.transform);
 			if (objecte != null) { 
-				inst = Instantiate(objecte, new Vector3(pos.x, pos.y, 0F), Quaternion.identity) as GameObject;
-				inst.transform.SetParent(boardHolder);
+				//Hi ha objecte en la casella.
+				GameObject instanciaObjecte = Instantiate(objecte, new Vector3(pos.x*1.28f, pos.y* 1.28f, 0F), Quaternion.identity) as GameObject;
+				instanciaObjecte.transform.SetParent(instanciaTerra.transform);
 			}
-			inst = Instantiate(terra, new Vector3(pos.x, pos.y, 0F), Quaternion.identity) as GameObject;
-			inst.transform.SetParent(boardHolder);
+			if (numero != null) { 
+				//Hi ha número en la casella.
+				GameObject instanciaNumero = Instantiate(numero, new Vector3(pos.x * 1.28f, pos.y * 1.28f, 0F), Quaternion.identity) as GameObject;
+				instanciaNumero.GetComponent<UnityEngine.UI.Text>().text = ""+casella.getNumero();				//El número també és fill del terra.
+				instanciaNumero.transform.SetParent(instanciaTerra.transform);
+			}
 		}
+		//Instanciar el jugador.
+		GameObject instanciaJugador = Instantiate(this.goJugador, new Vector3(taulell.jugador.posicio.x, taulell.jugador.posicio.y*0.84f, 0F), Quaternion.identity) as GameObject;
+		instanciaJugador.transform.SetParent(boardHolder);
+
+		//Instanciar la sortida.
+		GameObject instanciaSortida = Instantiate(this.goSortides[iRecurs], new Vector3(taulell.sortida.posicio.x * 1.28f, taulell.sortida.posicio.y * 1.28f, 0F), Quaternion.identity) as GameObject;
+		instanciaSortida.transform.SetParent(boardHolder);
+
+		GameManager.instancia.setTotalMonedes(nMonedes);
+		GameManager.instancia.setSortida(instanciaSortida);
+		//Fer les parets exteriors per evitar que el jugador surti de la pantalla.
+		ferVoltant(taulell).transform.SetParent(boardHolder);
+	}
+
+	private GameObject ferVoltant(Taulell taulell) {		GameObject exterior = new GameObject("BordeExterior");
+		int x = -1;
+		int y = -1;
+		//Paret exterior verticals
+		for (int i = 0; i < taulell.nFiles; i++) { 
+			(Instantiate(this.goParetOutH, new Vector3(-1.28f, i * 1.28f, 0F), Quaternion.identity) as GameObject).transform.SetParent(exterior.transform);
+			(Instantiate(this.goParetOutH, new Vector3(taulell.nColumnes * 1.28f, i * 1.28f, 0F), Quaternion.identity) as GameObject).transform.SetParent(exterior.transform);
+		}
+		//Paret exterior horizontals
+		for (int i = 0; i < taulell.nColumnes; i++) { 
+			(Instantiate(this.goParetOutH, new Vector3(i * 1.28f, -1.28f, 0F), Quaternion.identity) as GameObject).transform.SetParent(exterior.transform);
+			(Instantiate(this.goParetOutH, new Vector3(i * 1.28f, taulell.nFiles * 1.28f, 0F), Quaternion.identity) as GameObject).transform.SetParent(exterior.transform);
+		}
+
+		//Fer els 4 extrems.
+		(Instantiate(this.goParetOutH, new Vector3(-1.28f, -1.28f, 0F), Quaternion.identity) as GameObject).transform.SetParent(exterior.transform);
+		(Instantiate(this.goParetOutH, new Vector3(taulell.nColumnes * 1.28f, taulell.nFiles * 1.28f, 0F), Quaternion.identity) as GameObject).transform.SetParent(exterior.transform);
+		(Instantiate(this.goParetOutH, new Vector3(taulell.nColumnes * 1.28f, -1.28f, 0F), Quaternion.identity) as GameObject).transform.SetParent(exterior.transform);
+		(Instantiate(this.goParetOutH, new Vector3(-1.28f, taulell.nFiles * 1.28f, 0F), Quaternion.identity) as GameObject).transform.SetParent(exterior.transform);
+		return exterior;
 	}
 
 	public void carregar(int nivell, string[] linies){
@@ -207,12 +300,12 @@ public class BoardManager : MonoBehaviour {
 		Dictionary<int, Posicio> vinculador = new Dictionary<int, Posicio>();
 		List<List<Casella>> t = new List<List<Casella>>();
 		Jugador jugador = null;
+		Sortida sortida = null;
 
 		//Aplicar la capa d'estructura
 		{
 			for (int i = 0; i < nFiles; i++)
 			{
-				//Debug.Log("Linia: " + linies[i]);
 				string[] sFila = linies[indexLinia++].Split(';');
 				if (sFila.Length != nColumnes) {
 					throw new FitxerFormatException("La fila "+i+" de l'estructura del taulell no és valida, hauria de tenir: " + nColumnes + " columnes i en té: " + sFila.Length);
@@ -243,7 +336,7 @@ public class BoardManager : MonoBehaviour {
 					else {
 						element = valor == PARED_IN_H ? Element.PARED_IN_H: Element.PARED_IN_V;
 					}
-					f.Add(new Casella(pos, element, parella));
+					f.Add(new Casella(pos, element, parella, valor));
 				}
 			}
 		}
@@ -269,7 +362,7 @@ public class BoardManager : MonoBehaviour {
 							break;
 						case "E":
 							//Exit -> Sortida
-							t[i][j].setElement(Element.SORTIDA);
+							sortida = new Sortida(new Posicio(i, j));
 							break;
 						case "P":
 							//Player -> Jugador							jugador = new Jugador(new Posicio(i, j));
@@ -286,7 +379,6 @@ public class BoardManager : MonoBehaviour {
 			//El taulell està mal format, cal llençar excepció.
 		}
 
-		this.taulell = new Taulell(nivell, nFiles, nColumnes, t, jugador).validar();
-		this.setup(taulell);
+		this.setup(new Taulell(nivell, nFiles, nColumnes, t, jugador, sortida).validar());
 	}
 }

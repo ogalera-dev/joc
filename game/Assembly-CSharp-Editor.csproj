@@ -53,6 +53,7 @@
   <ItemGroup>
      <Compile Include="Assets\TextureAtlasSlicer\Editor\TextureAtlasSlicer.cs" />
      <None Include="Assets\Taulells\L1.txt" />
+     <None Include="Assets\Fonts\OFL.txt" />
      <None Include="Assets\Sprites\sokoban_spritesheet@2.xml" />
      <None Include="Assets\Sprites\sokoban_spritesheet.xml" />
  <Reference Include="UnityEditor.Advertisements">
